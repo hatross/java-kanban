@@ -4,9 +4,7 @@ public class TaskManager {
     private HashMap<Integer, Task> taskList = new HashMap<>();
     private HashMap<Integer, Epic> epicList = new HashMap<>();
     private HashMap<Integer, Subtask> subtaskList = new HashMap<>();
-//    static HashMap<String, Integer> projectCounters = new HashMap<>();
     private Integer uid = 0;
-//    StatusManager statusManager = new StatusManager();
     private ArrayList<Integer> newLinkedTasks;
 
     public HashMap<Integer, Task> getTaskList() {
