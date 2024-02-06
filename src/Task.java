@@ -39,7 +39,13 @@ public class Task {
     }
 
     public Task(Integer uid, String summary, String description, Status status) {
-        this.uid = Objects.requireNonNullElse(uid, 0);
+        this.uid = uid;
+        this.summary = summary;
+        this.description = description;
+        this.status = status;
+    }
+
+    public Task(String summary, String description, Status status) {
         this.summary = summary;
         this.description = description;
         this.status = status;

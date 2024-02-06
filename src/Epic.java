@@ -10,6 +10,11 @@ public class Epic extends Task {
         this.linkedTasks = Objects.requireNonNullElseGet(linkedTasks, ArrayList::new);
     }
 
+    public Epic(String summary, String description, ArrayList<Integer> linkedTasks) {
+        super(summary, description, Status.NEW);
+        this.linkedTasks = Objects.requireNonNullElseGet(linkedTasks, ArrayList::new);
+    }
+
     public ArrayList<Integer> getLinkedTasks() {
         return linkedTasks;
     }
