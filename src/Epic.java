@@ -1,28 +1,39 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Epic extends Task {
-    ArrayList<Integer> linkedTasks;
-    public Epic(String projectCode, Integer uid, String summary, String description, Status status, ArrayList<Integer> linkedTasks) {
-        super(projectCode, uid, summary, description, status);
+    private ArrayList<Integer> linkedTasks;
+
+    public Epic(Integer uid, String summary, String description, ArrayList<Integer> linkedTasks) {
+        super(uid, summary, description, Status.NEW);
         this.linkedTasks = Objects.requireNonNullElseGet(linkedTasks, ArrayList::new);
+    }
+
+    public ArrayList<Integer> getLinkedTasks() {
+        return linkedTasks;
+    }
+
+    public void setLinkedTasks(ArrayList<Integer> linkedTasks) {
+        this.linkedTasks = linkedTasks;
     }
 
     @Override
     public String toString() {
         String result = "Epic{" +
-                "projectCode='" + projectCode + '\'' +
-                ", taskNumber=" + uid +
-                ", summary='" + summary + '\'';
+                "uid=" + getUid() +
+                ", summary='" + getSummary() + '\'';
 
-        if (description != null) {
-            result = result + ", description.length=" + description.length();
+        if (getDescription() != null) {
+            result = result + ", description.length=" + getDescription().length();
         } else {
             result = result + ", description.length=null";
         }
 
+        result = result + ", status=" + getStatus();
+
         if (!linkedTasks.isEmpty()) {
-            result = result + ", linkedTasks=" + linkedTasks;
+            result = result + ", linkedTasks=" + Arrays.toString(linkedTasks.toArray());
         } else {
             result = result + ", linkedTasks=null";
         }

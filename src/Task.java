@@ -1,16 +1,45 @@
 import java.util.Objects;
 
 public class Task {
-    int uid;
-    String projectCode;
-    String summary;
-    String description;
-    Status status;
-    Integer epicId;
+    private int uid;
+    private String summary;
+    private String description;
+    private Status status;
 
-    public Task(String projectCode, Integer uid, String summary, String description, Status status) {
-        this.projectCode = projectCode;
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
         this.uid = uid;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Task(Integer uid, String summary, String description, Status status) {
+        this.uid = Objects.requireNonNullElse(uid, 0);
         this.summary = summary;
         this.description = description;
         this.status = status;
@@ -19,8 +48,7 @@ public class Task {
     @Override
     public String toString() {
         String result = "Task{" +
-                "projectCode='" + projectCode + '\'' +
-                ", taskNumber=" + uid +
+                "uid=" + uid +
                 ", summary='" + summary + '\'';
 
         if (description != null) {
@@ -41,18 +69,17 @@ public class Task {
         Task task = (Task) o;
 
         if (uid != task.uid) return false;
-        if (!Objects.equals(projectCode, task.projectCode)) return false;
-        if (!Objects.equals(summary, task.summary)) return false;
+        if (!summary.equals(task.summary)) return false;
         if (!Objects.equals(description, task.description)) return false;
-        if (status != task.status) return false;
-        return Objects.equals(epicId, task.epicId);
+        return status == task.status;
     }
 
     @Override
     public int hashCode() {
-        int result = 17;
-        result = 31 * result + (projectCode != null ? projectCode.hashCode() : 0);
-        result = 31 * result + uid;
+        int result = uid;
+        result = 31 * result + summary.hashCode();
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + status.hashCode();
         return result;
     }
 }

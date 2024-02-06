@@ -1,25 +1,25 @@
 import java.util.Objects;
 
 public class Subtask extends Task {
-    public Subtask(String projectCode, Integer taskNumber, String summary, String description, Status status
-                   , Integer epicId) {
-        super(projectCode, taskNumber, summary, description, status);
+    Integer epicId;
+
+    public Subtask(Integer uid, String summary, String description, Status status, Integer epicId) {
+        super(uid, summary, description, status);
         this.epicId = Objects.requireNonNull(epicId);
     }
 
     public String toString() {
         String result = "Subtask{" +
-                "projectCode='" + projectCode + '\'' +
-                ", taskNumber=" + uid +
-                ", summary='" + summary + '\'';
+                "uid=" + getUid() +
+                ", summary='" + getSummary() + '\'';
 
-        if (description != null) {
-            result = result + ", description.length=" + description.length();
+        if (getDescription() != null) {
+            result = result + ", description.length=" + getDescription().length();
         } else {
             result = result + ", description.length=null";
         }
 
-        return result + ", status=" + status +
+        return result + ", status=" + getStatus() +
                 ", epicId=" + epicId +
                 '}';
     }
