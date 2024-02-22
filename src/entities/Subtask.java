@@ -1,8 +1,5 @@
 package entities;
 
-import entities.Status;
-import entities.Task;
-
 import java.util.Objects;
 
 public class Subtask extends Task {
