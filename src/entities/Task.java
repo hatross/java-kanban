@@ -1,3 +1,5 @@
+package entities;
+
 import java.util.Objects;
 
 public class Task {
@@ -53,7 +55,7 @@ public class Task {
 
     @Override
     public String toString() {
-        String result = "Task{" +
+        String result = "entities.Task{" +
                 "uid=" + uid +
                 ", summary='" + summary + '\'';
 
@@ -75,7 +77,7 @@ public class Task {
         Task task = (Task) o;
 
         if (uid != task.uid) return false;
-        if (!summary.equals(task.summary)) return false;
+        if (!Objects.equals(summary, task.summary)) return false;
         if (!Objects.equals(description, task.description)) return false;
         return status == task.status;
     }
@@ -83,7 +85,7 @@ public class Task {
     @Override
     public int hashCode() {
         int result = uid;
-        result = 31 * result + summary.hashCode();
+        result = 31 * result + (summary != null ? summary.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + status.hashCode();
         return result;

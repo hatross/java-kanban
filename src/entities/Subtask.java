@@ -1,3 +1,8 @@
+package entities;
+
+import entities.Status;
+import entities.Task;
+
 import java.util.Objects;
 
 public class Subtask extends Task {
@@ -22,7 +27,7 @@ public class Subtask extends Task {
     }
 
     public String toString() {
-        String result = "Subtask{" +
+        String result = "entities.Subtask{" +
                 "uid=" + getUid() +
                 ", summary='" + getSummary() + '\'';
 

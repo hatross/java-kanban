@@ -1,3 +1,9 @@
+import entities.Epic;
+import entities.Status;
+import entities.Subtask;
+import entities.Task;
+import managers.Managers;
+import managers.TaskManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -7,10 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class InMemoryTaskManagerTest {
     @Test
     public void addAllTypesTasks() {
-        TaskManager manager = Managers.getInMemoryTaskManager();
+        TaskManager manager = Managers.getDefault();
         Task task = new Task("Задача", "Описание", Status.NEW);
         Epic epic = new Epic("Эпик", "Описание", null);
-        Subtask subtask = new Subtask("Подзадача", "Описание", Status.NEW, 2);
 
         int taskUid = manager.createTask(task);
         Task savedTask = manager.getTaskById(taskUid);
@@ -22,6 +27,7 @@ class InMemoryTaskManagerTest {
         assertNotNull(savedEpic, "Эпик не найден;");
         assertEquals(epic, savedEpic, "Эпики не совпадают.");
 
+        Subtask subtask = new Subtask("Подзадача", "Описание", Status.NEW, epicUid);
         int subtaskUid = manager.createSubtask(subtask);
         Task savedSubtask = manager.getSubtaskById(subtaskUid);
         assertNotNull(savedSubtask, "Подзадача не найдена.");
@@ -44,14 +50,12 @@ class InMemoryTaskManagerTest {
     }
 
     @Test
-    public void shouldNotBeEqualWhenCreatingWithCustomUid() {
-        TaskManager manager = Managers.getInMemoryTaskManager();
-        Task task1 = new Task("Первая задача в проекте TASK", "Текст описания!", Status.NEW);
-        Task task2 = new Task(1, "Первая задача в проекте TASK", "Текст описания!", Status.NEW);
-        int task1Id = manager.createTask(task1);
-        int task2Id = manager.createTask(task2);
+    public void shouldNotAssignCustomId() {
+        TaskManager manager = Managers.getDefault();
+        Task task = new Task(123, "Первая задача в проекте TASK", "Текст описания!", Status.NEW);
+        int taskId = manager.createTask(task);
 
-        assertNotEquals(manager.getTaskById(task1Id), manager.getTaskById(task2Id), "Задачи совпали.");
+        assertNotEquals(123, taskId);
     }
 
 }

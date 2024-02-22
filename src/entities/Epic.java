@@ -1,3 +1,5 @@
+package entities;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -25,7 +27,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        String result = "Epic{" +
+        String result = "entities.Epic{" +
                 "uid=" + getUid() +
                 ", summary='" + getSummary() + '\'';
 

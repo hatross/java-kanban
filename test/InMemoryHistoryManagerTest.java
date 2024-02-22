@@ -1,3 +1,8 @@
+import entities.Status;
+import entities.Task;
+import managers.HistoryManager;
+import managers.Managers;
+import managers.TaskManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -5,14 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class InMemoryHistoryManagerTest {
     @Test
     public void shouldStorePreviousTaskVersion() {
-        TaskManager taskManager = Managers.getInMemoryTaskManager();
+        TaskManager taskManager = Managers.getDefault();
         HistoryManager historyManager = Managers.getDefaultHistory();
 
         Task task = new Task("Первая задача в проекте TASK", "Текст описания!", Status.NEW);
         int taskId = taskManager.createTask(task);
 
         taskManager.getTaskById(taskId);
-        task = new Task(1, "Первая задача в проекте TASK", "Новое описание!", Status.NEW);
+        task = new Task(taskId, "Первая задача в проекте TASK", "Новое описание!", Status.NEW);
         taskManager.updateTask(task);
 
         taskManager.getTaskById(taskId);

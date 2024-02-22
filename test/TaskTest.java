@@ -1,3 +1,8 @@
+import entities.Epic;
+import entities.Status;
+import entities.Task;
+import managers.Managers;
+import managers.TaskManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -5,20 +10,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class TaskTest {
     @Test
     public void shouldBeEqualIfSameIdTasks() {
-        TaskManager manager = Managers.getInMemoryTaskManager();
-        Task task1 = new Task("Первая задача в проекте TASK", "Текст описания!", Status.NEW);
-        manager.createTask(task1);
-        task1 = manager.getTaskById(1);
-        Task task2 = manager.getTaskById(1);
+        TaskManager manager = Managers.getDefault();
+        Task task1 = new Task(1, "", "", Status.NEW);
+        Task task2 = new Task(1, "", "", Status.NEW);
         assertEquals(task1, task2);
     }
 
     @Test
     public void shouldBeEqualIfSameIdTaskInheritors() {
-        TaskManager manager = Managers.getInMemoryTaskManager();
-        Task epic1 = new Epic("Эпик с одной подзадачей", "Какой-то текст!",null);
-        manager.createTask(epic1);
-        Task epic2 = manager.getTaskById(1);
+        TaskManager manager = Managers.getDefault();
+        Task epic1 = new Epic(1, "", "",null);
+        Task epic2 = new Epic(1, "", "",null);
         assertEquals(epic1, epic2);
     }
 }
