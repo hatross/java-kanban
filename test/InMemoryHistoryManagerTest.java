@@ -90,6 +90,7 @@ class InMemoryHistoryManagerTest {
         taskManager.getEpicById(epicId);
         taskManager.getSubtaskById(subtaskId);
 
+        System.out.println(taskManager.getHistory());
         taskManager.deleteSubtaskById(subtaskId);
 
         assertEquals(1, taskManager.getHistory().size());
@@ -115,5 +116,4 @@ class InMemoryHistoryManagerTest {
         taskManager.deleteAllTasks();
         assertEquals(0, taskManager.getHistory().size());
     }
-
 }

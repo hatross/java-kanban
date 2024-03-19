@@ -57,10 +57,4 @@ class InMemoryTaskManagerTest {
 
         assertNotEquals(123, taskId);
     }
-
-    @Test
-    public void dataIsConsistentWhenUsingSetters() {
-
-    }
-
 }

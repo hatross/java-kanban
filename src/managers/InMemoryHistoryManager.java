@@ -11,37 +11,34 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        int id = task.getUid();
-        if (!innerMap.containsKey(id)) {
-            innerMap.put(id, linkLast(task));
+        Integer id = task.getUid();
+        if (innerMap.containsKey(id)) {
+            innerMap.remove(id);
         }
+        innerMap.put(id, linkLast(task));
     }
 
     @Override
     public ArrayList<Task> getHistory() {
         ArrayList<Task> history = new ArrayList<>();
-        for (Integer id : innerMap.keySet()) {
-            Task nodeData = innerMap.get(id).data;
-            history.add(nodeData);
+        Node currentNode = head;
+        for (int i = 0; i < innerMap.size(); i++) {
+            history.add(currentNode.data);
+            currentNode = currentNode.next;
         }
         return history;
     }
 
     @Override
     public void remove(int id) {
-        if (innerMap.size() > 1) {
-            removeNode(innerMap.get(id));
-            innerMap.remove(id);
-        } else {
-            innerMap.clear();
-        }
+        removeNode(innerMap.get(id));
+        innerMap.remove(id);
     }
 
     @Override
     public void clear() {
+        removeNode(tail);
         innerMap.clear();
-        head = null;
-        tail = null;
     }
 
     private Node linkLast(Task task) {
