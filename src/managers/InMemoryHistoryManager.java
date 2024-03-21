@@ -13,6 +13,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     public void add(Task task) {
         Integer id = task.getUid();
         if (innerMap.containsKey(id)) {
+            removeNode(innerMap.get(id));
             innerMap.remove(id);
         }
         innerMap.put(id, linkLast(task));
@@ -20,9 +21,13 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public ArrayList<Task> getHistory() {
+        if (innerMap.isEmpty()) {
+            return null;
+        }
+
         ArrayList<Task> history = new ArrayList<>();
         Node currentNode = head;
-        for (int i = 0; i < innerMap.size(); i++) {
+        while (currentNode != null) {
             history.add(currentNode.data);
             currentNode = currentNode.next;
         }
@@ -31,13 +36,19 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        removeNode(innerMap.get(id));
-        innerMap.remove(id);
+        if (innerMap.containsKey(id)) {
+            removeNode(innerMap.get(id));
+            innerMap.remove(id);
+        }
     }
 
     @Override
     public void clear() {
-        removeNode(tail);
+        Node currentNode = head;
+        while (currentNode != null) {
+            removeNode(currentNode);
+            currentNode = currentNode.next;
+        }
         innerMap.clear();
     }
 
