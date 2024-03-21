@@ -21,10 +21,6 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public ArrayList<Task> getHistory() {
-        if (innerMap.isEmpty()) {
-            return null;
-        }
-
         ArrayList<Task> history = new ArrayList<>();
         Node currentNode = head;
         while (currentNode != null) {
@@ -44,12 +40,9 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void clear() {
-        Node currentNode = head;
-        while (currentNode != null) {
-            removeNode(currentNode);
-            currentNode = currentNode.next;
-        }
         innerMap.clear();
+        head = null;
+        tail = null;
     }
 
     private Node linkLast(Task task) {
