@@ -57,5 +57,4 @@ class InMemoryTaskManagerTest {
 
         assertNotEquals(123, taskId);
     }
-
 }

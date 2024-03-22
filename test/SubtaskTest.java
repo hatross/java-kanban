@@ -25,4 +25,19 @@ class SubtaskTest {
 
         assertNotEquals(subtask.getEpicId(), manager.getSubtaskById(subtaskId).getEpicId());
     }
+
+    @Test
+    public void shouldRemoveSubtaskWhenRemovingEpic() {
+        TaskManager manager = Managers.getDefault();
+
+        Epic epic = new Epic("Эпик с одной подзадачей", "Какой-то текст!",null);
+        int epicId = manager.createEpic(epic);
+
+        Subtask subtask = new Subtask("Первая подзадача в EPIC1", "Другой текст!"
+                , Status.NEW, epicId);
+        int subtaskId = manager.createSubtask(subtask);
+
+        manager.deleteEpicById(epicId);
+        assertNull(manager.getSubtaskById(subtaskId));
+    }
 }
