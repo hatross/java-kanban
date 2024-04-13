@@ -15,8 +15,8 @@ class TaskTest {
 
     @Test
     public void shouldBeEqualIfSameIdTaskInheritors() {
-        Task epic1 = new Epic(1, "", "",null);
-        Task epic2 = new Epic(1, "", "",null);
+        Task epic1 = new Epic(1, "", "",Status.NEW);
+        Task epic2 = new Epic(1, "", "",Status.NEW);
         assertEquals(epic1, epic2);
     }
 }
