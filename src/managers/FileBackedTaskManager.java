@@ -113,18 +113,18 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     String toString(Task task) {
-        return String.join(",", task.getUid().toString(), Type.TASK.toString(), task.getSummary()
-                , task.getStatus().toString(), task.getDescription());
+        return String.join(",", task.getUid().toString(), Type.TASK.toString(), task.getSummary(),
+                task.getStatus().toString(), task.getDescription());
     }
 
     String toString(Epic epic) {
-        return String.join(",", epic.getUid().toString(), Type.EPIC.toString(), epic.getSummary()
-                , epic.getStatus().toString(), epic.getDescription());
+        return String.join(",", epic.getUid().toString(), Type.EPIC.toString(), epic.getSummary(),
+                epic.getStatus().toString(), epic.getDescription());
     }
 
     String toString(Subtask subtask) {
-        return String.join(",", subtask.getUid().toString(), Type.SUBTASK.toString(), subtask.getSummary()
-                , subtask.getStatus().toString(), subtask.getDescription(), subtask.getEpicId().toString());
+        return String.join(",", subtask.getUid().toString(), Type.SUBTASK.toString(), subtask.getSummary(),
+                subtask.getStatus().toString(), subtask.getDescription(), subtask.getEpicId().toString());
     }
 
     public Task taskFromString(String value) {
