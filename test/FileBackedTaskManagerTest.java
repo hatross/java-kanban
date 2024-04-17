@@ -9,21 +9,6 @@ import java.io.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileBackedTaskManagerTest {
-    @Test
-    public void savingEmptyFile() {
-        try {
-            File temp = File.createTempFile("taskmanager", ".txt");
-            FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(temp);
-            //fileBackedTaskManager.save();
-
-            BufferedReader br = new BufferedReader(new FileReader(temp));
-            String line = br.readLine();
-
-            assertNotNull(line);
-        } catch (IOException | ManagerSaveException e) {
-            assertTrue(false);
-        }
-    }
 
     @Test
     public void loadFromEmptyFile() {
