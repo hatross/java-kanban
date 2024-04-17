@@ -7,7 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
+public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
 
     public FileBackedTaskManager(File file) {
@@ -17,53 +17,83 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     @Override
     public Integer createTask(Task task) {
         super.createTask(task);
-        try {
-            save();
-        } catch (ManagerSaveException e) {
-            e.printStackTrace();
-        }
+        save();
         return task.getUid();
     }
 
     @Override
     public Integer createEpic(Epic epic) {
         super.createEpic(epic);
-        try {
-            save();
-        } catch (ManagerSaveException e) {
-            e.printStackTrace();
-        }
+        save();
         return epic.getUid();
     }
 
     @Override
     public Integer createSubtask(Subtask subtask) {
         super.createSubtask(subtask);
-        try {
-            save();
-        } catch (ManagerSaveException e) {
-            e.printStackTrace();
-        }
+        save();
         return subtask.getUid();
     }
 
-    public void save() throws ManagerSaveException {
+    @Override
+    public void updateTask(Task task) {
+        super.updateTask(task);
+        save();
+    }
+
+    @Override
+    public void updateSubtask(Subtask subtask) {
+        super.updateSubtask(subtask);
+        save();
+    }
+
+    @Override
+    public void updateEpic(Epic epic) {
+        super.updateEpic(epic);
+        save();
+    }
+
+    @Override
+    public void deleteTaskById(Integer id) {
+        super.deleteTaskById(id);
+        save();
+    }
+
+    @Override
+    public void deleteEpicById(Integer id) {
+        super.deleteEpicById(id);
+        save();
+    }
+
+    @Override
+    public void deleteSubtaskById(Integer id) {
+        super.deleteSubtaskById(id);
+        save();
+    }
+
+    @Override
+    public void deleteAllTasks() {
+        super.deleteAllTasks();
+        save();
+    }
+
+    private void save() throws ManagerSaveException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
             bw.write("id,type,name,status,description,epic\n");
             for (Task task : getAllTasks()) {
-                bw.append(toString(task) + "\n");
+                bw.append(taskToString(task) + "\n");
             }
 
             for (Epic epic : getAllEpics()) {
-                bw.append(toString(epic) + "\n");
+                bw.append(epicToString(epic) + "\n");
             }
 
             for (Subtask subtask : getAllSubtasks()) {
-                bw.append(toString(subtask) + "\n");
+                bw.append(subtaskToString(subtask) + "\n");
             }
 
             bw.append("\n" + "Просмотрено: " + "\n");
-            bw.append(historyToString(getHistoryManager()));
+            bw.append(historyToString(getHistory()));
 
         } catch (IOException e) {
             throw new ManagerSaveException();
@@ -95,9 +125,9 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         return fileBackedTaskManager;
     }
 
-    static String historyToString(HistoryManager manager) {
+    static String historyToString(ArrayList<Task> history) {
         StringBuilder sb = new StringBuilder();
-        for (Task task : manager.getHistory()) {
+        for (Task task : history) {
             sb.append(task.getUid() + ", ");
         }
         return sb.toString();
@@ -112,17 +142,17 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         return history;
     }
 
-    String toString(Task task) {
+    String taskToString(Task task) {
         return String.join(",", task.getUid().toString(), Type.TASK.toString(), task.getSummary(),
                 task.getStatus().toString(), task.getDescription());
     }
 
-    String toString(Epic epic) {
+    String epicToString(Epic epic) {
         return String.join(",", epic.getUid().toString(), Type.EPIC.toString(), epic.getSummary(),
                 epic.getStatus().toString(), epic.getDescription());
     }
 
-    String toString(Subtask subtask) {
+    String subtaskToString(Subtask subtask) {
         return String.join(",", subtask.getUid().toString(), Type.SUBTASK.toString(), subtask.getSummary(),
                 subtask.getStatus().toString(), subtask.getDescription(), subtask.getEpicId().toString());
     }

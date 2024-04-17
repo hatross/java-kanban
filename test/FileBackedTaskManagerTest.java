@@ -14,7 +14,7 @@ class FileBackedTaskManagerTest {
         try {
             File temp = File.createTempFile("taskmanager", ".txt");
             FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(temp);
-            fileBackedTaskManager.save();
+            //fileBackedTaskManager.save();
 
             BufferedReader br = new BufferedReader(new FileReader(temp));
             String line = br.readLine();
@@ -52,6 +52,43 @@ class FileBackedTaskManagerTest {
             fileBackedTaskManager.createTask(task2);
 
             assertFalse(temp.length() == 0);
+        } catch (IOException e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    public void updateTask() {
+        try {
+            File temp = File.createTempFile("taskmanager", ".txt");
+            FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(temp);
+
+            Task task1 = new Task(1, "задача", "описание", Status.NEW);
+            fileBackedTaskManager.createTask(task1);
+            long preUpdateLength = temp.length();
+            task1 = new Task(1, "другое имя", "другое описание", Status.NEW);
+            fileBackedTaskManager.updateTask(task1);
+            long postUpdateLength = temp.length();
+
+            assertFalse(preUpdateLength == postUpdateLength);
+        } catch (IOException e) {
+            assertTrue(false);
+        }
+    }
+
+    @Test
+    public void deleteTask() {
+        try {
+            File temp = File.createTempFile("taskmanager", ".txt");
+            FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(temp);
+
+            Task task1 = new Task(1, "задача", "описание", Status.NEW);
+            int taskId = fileBackedTaskManager.createTask(task1);
+            long preUpdateLength = temp.length();
+            fileBackedTaskManager.deleteTaskById(taskId);
+            long postUpdateLength = temp.length();
+
+            assertTrue(preUpdateLength > postUpdateLength);
         } catch (IOException e) {
             assertTrue(false);
         }
