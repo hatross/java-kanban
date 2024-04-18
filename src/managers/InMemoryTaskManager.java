@@ -209,6 +209,7 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
+
     private void updateEpicStatus(Integer epicId) {
         Epic epic = epicList.get(epicId);
         if (isDoneEpic(epicId)) {
